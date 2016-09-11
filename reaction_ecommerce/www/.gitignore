@@ -2,6 +2,4 @@
 *.pyc
 *.egg-info
 *.swp
-tags
-reaction_ecommerce/docs/current
 webreaction_restaurant/
