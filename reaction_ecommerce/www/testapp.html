@@ -1,0 +1,18 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+     {%- for link in css_files %}
+        <link type="text/css" rel="stylesheet" class="__meteor-css__" href="{{meteor_server}}{{ link }}">
+     {%- endfor -%}
+  </head>
+  <body>
+    {% if meteor_runtime_config %}
+         <script type="text/javascript">
+          {{meteor_runtime_config}}
+         </script>
+      {% endif %}
+    {%- for link in js_files %}
+	    <script type="text/javascript" src="{{meteor_server}}{{ link }}"></script>
+	{%- endfor -%}
+  </body>
+</html>

@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include reaction_ecommerce *.css
+recursive-include reaction_ecommerce *.csv
+recursive-include reaction_ecommerce *.html
+recursive-include reaction_ecommerce *.ico
+recursive-include reaction_ecommerce *.js
+recursive-include reaction_ecommerce *.json
+recursive-include reaction_ecommerce *.md
+recursive-include reaction_ecommerce *.png
+recursive-include reaction_ecommerce *.py
+recursive-include reaction_ecommerce *.svg
+recursive-include reaction_ecommerce *.txt
+recursive-exclude reaction_ecommerce *.pyc
