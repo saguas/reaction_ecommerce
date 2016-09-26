@@ -33,10 +33,15 @@ app_license = "MIT"
 #	"Role": "home_page"
 # }
 
+
+on_logout = "reaction_ecommerce.utils.users.on_logout"
+
+
 # Website user home page (by function)
 get_website_user_home_page = "reaction_ecommerce.utils.get_home_page"
 website_route_rules = [
-	{"from_route": "/cfs/<path:name>", "to_route": "http://localhost:3000/cfs/servertime"}
+	{"from_route": "/cfs/<path:name>", "to_route": "http://localhost:3000/cfs/servertime"},
+	#{"from_route": "/update-password", "to_route": "/index"}
 ]
 #/cfs/
 
@@ -74,13 +79,12 @@ website_route_rules = [
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-#	}
-# }
+doc_events = {
+	"User": {
+#		"validate": "reaction_ecommerce.utils.users.validate",
+ 		"on_trash": "reaction_ecommerce.utils.users.on_trash"
+	}
+}
 
 # Scheduled Tasks
 # ---------------
@@ -111,7 +115,9 @@ website_route_rules = [
 # Overriding Whitelisted Methods
 # ------------------------------
 #
-# override_whitelisted_methods = {
-# 	"frappe.desk.doctype.event.event.get_events": "reaction_ecommerce.event.get_events"
-# }
+override_whitelisted_methods = {
+	"frappe.core.doctype.user.user.update_password": "reaction_ecommerce.utils.users.update_password",
+	"frappe.core.doctype.user.user.verify_password": "reaction_ecommerce.utils.users.verify_password",
+	"frappe.core.doctype.user.user.test_password_strength": "reaction_ecommerce.utils.users.test_password_strength"
+}
 

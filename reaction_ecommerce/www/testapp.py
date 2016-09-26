@@ -153,7 +153,7 @@ def _get_meteor_runtime_config():
 	meteor_config["autoupdateVersionRefreshable"] = calculateClientHashRefreshable(manifest, sconfig)
 	meteor_config["autoupdateVersion"] = calculateClientHash(manifest, sconfig)
 	meteor_config["autoupdateVersionCordova"] = "none"
-	#meteor_config["ROOT_URL_PATH_PREFIX"] = "/assets/eweb"
+	#meteor_config["ROOT_URL_PATH_PREFIX"] = "/react"
 
 	return json_javascript_stringify(meteor_config)
 
@@ -177,19 +177,24 @@ def get_react_files():
 		url = obj.get("url")
 		type = obj.get("type")
 		if(type == "js"):
-			js_files.append(url)
+			#js_files.append(url)
+			js_files.append(path)
 		elif (type == "css"):
-			css_files.append(url)
+			#css_files.append(url)
+			css_files.append(path)
 		elif (type == "asset"):
-			assets_files.append(url)
+			#assets_files.append(url)
+			assets_files.append(path)
 		elif (type == "head"):
+			#head_files.append(path)
 			head_files.append(path)
 	return (js_files, css_files, assets_files, head_files)
 
 def get_context(ctx):
 	(ctx.js_files, ctx.css_files, ctx.assets_files, ctx.head_files) = get_react_files()
 	ctx.meteor_runtime_config = get_meteor_runtime_config()
-	ctx.meteor_server = get_meteor_server_url()
+	#ctx.meteor_server = get_meteor_server_url()
+	ctx.meteor_server = ""
 	ctx.no_cache = True
 	print "meteor_config {}".format(meteor_config)
 	return ctx
