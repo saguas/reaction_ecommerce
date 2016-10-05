@@ -193,6 +193,7 @@ def on_logout():
 		else:
 			print "result for logoutuser {}".format(result)
 
+	#frappe Admin must have the same address of reaction admin
 	db.users.update_one({"emails.address": {"$in": [email]}}, {"$set":{"profile.cookies": cookies}})
 	import meteor_ddp as ddp
 	try:
