@@ -98,7 +98,7 @@ def before_start():
                 reaction reset (note: answer no to the question to reinstall npm packages)
         fourth:
             In one terminal do bench start
-            In onether terminal do reaction
+            In another terminal do reaction
             In your browser go to http://localhost or the url where is your nginx listening.
 
     """
