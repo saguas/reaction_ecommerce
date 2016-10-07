@@ -36,5 +36,6 @@ def after_install():
 
     #make eweb reaction_ecommerce/www/webreaction
     src = reaction_web
+    dst = os.path.join(public_path, "eweb")
     os.symlink(src, dst)
 
