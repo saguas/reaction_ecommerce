@@ -4,4 +4,6 @@
 *.swp
 tags
 reaction_ecommerce/docs/current
-webreaction_restaurant/
+reaction_ecommerce/www/webreaction
+reaction_ecommerce/public/eweb
+reaction_ecommerce/public/src
