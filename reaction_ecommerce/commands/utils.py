@@ -97,8 +97,9 @@ def before_start():
             If you already started reaction ecommerce before to do this changes in settings you must stop it and run it again with the following command:
                 reaction reset (note: answer no to the question to reinstall npm packages)
         fourth:
-            bench start
-            in your browser go to http://localhost or the url where is your nginx listening.
+            In one terminal do bench start
+            In onether terminal do reaction
+            In your browser go to http://localhost or the url where is your nginx listening.
 
     """
 
