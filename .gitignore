@@ -4,7 +4,7 @@
 *.swp
 tags
 reaction_ecommerce/docs/current
-./reaction_ecommerce/www/webreaction/
-./reaction_ecommerce/public/eweb/
-./reaction_ecommerce/public/src/
+reaction_ecommerce/www/webreaction/
+reaction_ecommerce/public/eweb/
+reaction_ecommerce/public/src/
 
