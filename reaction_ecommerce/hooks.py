@@ -55,7 +55,7 @@ website_route_rules = [
 # ------------
 
 # before_install = "reaction_ecommerce.install.before_install"
-# after_install = "reaction_ecommerce.install.after_install"
+after_install = "reaction_ecommerce.utils.install.after_install"
 
 # Desk Notifications
 # ------------------
