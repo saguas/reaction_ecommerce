@@ -5,6 +5,9 @@
 tags
 reaction_ecommerce/docs/current
 reaction_ecommerce/www/webreaction/
+reaction_ecommerce/www/deskreaction/
 reaction_ecommerce/public/eweb
-reaction_ecommerce/public/src
+reaction_ecommerce/public/edesk
+reaction_ecommerce/public/websrc
+reaction_ecommerce/public/desksrc
 

@@ -66,6 +66,7 @@ def install_web():
     reaction_plugins_path = os.path.abspath(os.path.join(reaction_web, "imports/plugins/custom"))
     run_cmd(reaction_plugins_path, "git", "clone", "https://github.com/saguas/efrappe.git")
 
+    run_cmd(reaction_www, "meteor", "npm", "install")
     #make public symlinks src .meteor/local/build/programs/web.browser and eweb in reaction_ecommerce/www/webreaction
     public_path = os.path.abspath(os.path.join(reaction_home, "public"))
     src = os.path.join(reaction_web, ".meteor/local/build/programs/web.browser")
