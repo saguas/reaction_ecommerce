@@ -1,11 +1,11 @@
 import frappe
 import os
-from subprocess import call, check_call, Popen
+from subprocess import check_call, Popen
 
 
 
 def run_cmd(path, cmd, *args):
-    proc = Popen([path + cmd] + list(args), cwd=path, close_fds=True)
+    proc = Popen([cmd] + list(args), cwd=path, close_fds=True)
     proc.wait()
 
 def git(*args):
@@ -20,11 +20,11 @@ def after_install():
     reaction_web = os.path.abspath(os.path.join(reaction_www, "webreaction"))
 
     #make webreaction folder
-    frappe.create_folder(reaction_web)
+    #frappe.create_folder(reaction_web)
 
     #git clone https://github.com/reactioncommerce/reaction.git
     #git("clone", "https://github.com/reactioncommerce/reaction.git")
-    run_cmd(reaction_web, "git", "clone", "https://github.com/reactioncommerce/reaction.git")
+    run_cmd(reaction_www, "git", "clone", "https://github.com/reactioncommerce/reaction.git", "webreaction")
 
     #make public symlinks src .meteor/local/build/programs/web.browser and eweb in reaction_ecommerce/www/webreaction
     public_path = os.path.abspath(os.path.join(reaction_home, "public"))
