@@ -44,7 +44,7 @@ def nginx():
 
         Add the following to location / before @webserver and after try_files /your site name/public/$uri:
 
-        /assets/reaction_ecommerce/src/$uri /assets/reaction_ecommerce/eweb/public/$uri /assets/reaction_ecommerce/eweb/$uri;
+        /assets/reaction_ecommerce/websrc/$uri /assets/reaction_ecommerce/eweb/public/$uri /assets/reaction_ecommerce/eweb/$uri;
 
         Note: when you are done do not forget to restart nginx
     """
