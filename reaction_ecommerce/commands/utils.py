@@ -97,8 +97,21 @@ def before_start():
             If you already started reaction ecommerce before to do this changes in settings you must stop it and run it again with the following command:
                 reaction reset (note: answer no to the question to reinstall npm packages)
         fourth:
-            In one terminal do bench start
-            In another terminal do reaction
+             In sites/common_site_config.json set:
+
+             "meteor_server": "http://localhost:3000",
+             "meteor_app_path": "../apps/reaction_ecommerce/reaction_ecommerce/www/webreaction",
+             "ROOT_URL":"http://localhost:3000",
+             "ROOT_URL_PATH_PREFIX":"",
+             "DDP_DEFAULT_CONNECTION_URL":"http://localhost:3000/",
+             "MONGOWEB":{
+               "host": "localhost",
+               "port": "3001"
+             }
+
+        fifth:
+            In one terminal cd frappe_bench folder and do bench start
+            In another terminal from frappe_bench folder do cd apps/reaction_ecommerce/reaction_ecommerce/www/webreaction and issue reaction
             In your browser go to http://localhost or the url where is your nginx listening.
 
     """

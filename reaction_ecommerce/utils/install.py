@@ -28,7 +28,7 @@ def install_desk():
     run_cmd(reaction_www, "git", "clone", "https://github.com/reactioncommerce/reaction.git", "deskreaction")
 
     #install meteor npm packages
-    print "#install desk meteor npm packages"
+    print "install desk meteor npm packages"
     run_cmd(reaction_desk, "meteor", "npm", "install")
     #git clone reaction efrappe
     #reaction_plugins_path = os.path.abspath(os.path.join(reaction_desk, "imports/plugins/custom"))
@@ -69,7 +69,7 @@ def install_web():
     run_cmd(reaction_plugins_path, "git", "clone", "https://github.com/saguas/efrappe.git")
 
     #install meteor npm packages
-    print "#install web meteor npm packages"
+    print "install web meteor npm packages"
     run_cmd(reaction_web, "meteor", "npm", "install")
     #make public symlinks src .meteor/local/build/programs/web.browser and eweb in reaction_ecommerce/www/webreaction
     public_path = os.path.abspath(os.path.join(reaction_home, "public"))

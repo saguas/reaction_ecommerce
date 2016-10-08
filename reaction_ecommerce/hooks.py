@@ -39,10 +39,10 @@ on_logout = "reaction_ecommerce.utils.users.on_logout"
 
 # Website user home page (by function)
 get_website_user_home_page = "reaction_ecommerce.utils.get_home_page"
-website_route_rules = [
-	{"from_route": "/cfs/<path:name>", "to_route": "http://localhost:3000/cfs/servertime"},
+#website_route_rules = [
+#	{"from_route": "/cfs/<path:name>", "to_route": "http://localhost:3000/cfs/servertime"},
 	#{"from_route": "/update-password", "to_route": "/index"}
-]
+#]
 #/cfs/
 
 # Generators
