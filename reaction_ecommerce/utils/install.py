@@ -88,3 +88,10 @@ def install_web():
 def after_install():
     install_web()
     install_desk()
+    info = """
+        *********************************************************
+        *   Please run bench reaction_ecommerce for more help.  *
+        *********************************************************
+    """
+    print info
+
