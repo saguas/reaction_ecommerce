@@ -37,10 +37,13 @@ def json_javascript_stringify(obj):
 
 def set_meteor_config():
 	common_config = frappe.get_file_json("common_site_config.json")
+	site_path = frappe.get_site_path()
 
-	meteor_config["DDP_DEFAULT_CONNECTION_URL"] = common_config.get("DDP_DEFAULT_CONNECTION_URL") or "http://localhost:3000/"
-	meteor_config["ROOT_URL_PATH_PREFIX"] = common_config.get("ROOT_URL_PATH_PREFIX") or ""
-	root_url = common_config.get("ROOT_URL") or "http://localhost:3000"
+	site_config = frappe.get_file_json(os.path.join(site_path, "site_config.json"))
+
+	meteor_config["DDP_DEFAULT_CONNECTION_URL"] = site_config.get("DDP_DEFAULT_CONNECTION_URL") or common_config.get("DDP_DEFAULT_CONNECTION_URL") or "http://localhost:3000/"
+	meteor_config["ROOT_URL_PATH_PREFIX"] = site_config.get("ROOT_URL_PATH_PREFIX") or common_config.get("ROOT_URL_PATH_PREFIX") or ""
+	root_url = site_config.get("ROOT_URL") or common_config.get("ROOT_URL") or "http://localhost:3000"
 	if (not root_url.endswith("/")):
 		root_url = root_url + "/"
 	meteor_config["ROOT_URL"] = root_url
@@ -48,23 +51,57 @@ def set_meteor_config():
 
 def get_meteor_ddp_default_conn_url():
 	common_config = frappe.get_file_json("common_site_config.json")
-	return common_config.get("DDP_DEFAULT_CONNECTION_URL") or "http://localhost:3000/"
+	site_path = frappe.get_site_path()
+
+	site_config = frappe.get_file_json(os.path.join(site_path, "site_config.json"))
+
+	ddp = site_config.get("DDP_DEFAULT_CONNECTION_URL") or common_config.get("DDP_DEFAULT_CONNECTION_URL") or "http://localhost:3000/"
+
+	return ddp
 
 def get_meteor_app_path():
 	common_config = frappe.get_file_json("common_site_config.json")
-	return common_config.get("meteor_app_path") or ""
+
+	site_path = frappe.get_site_path()
+
+	site_config = frappe.get_file_json(os.path.join(site_path, "site_config.json"))
+
+	meteor_app = site_config.get("meteor_app_path") or common_config.get("meteor_app_path") or ""
+
+	return meteor_app
 
 def get_meteor_root_url_paht_prefix():
 	common_config = frappe.get_file_json("common_site_config.json")
-	return common_config.get("ROOT_URL_PATH_PREFIX") or ""
+
+	site_path = frappe.get_site_path()
+
+	site_config = frappe.get_file_json(os.path.join(site_path, "site_config.json"))
+
+	root_url_prefix = site_config.get("ROOT_URL_PATH_PREFIX") or common_config.get("ROOT_URL_PATH_PREFIX") or ""
+
+	return root_url_prefix
 
 def get_meteor_root_url():
 	common_config = frappe.get_file_json("common_site_config.json")
-	return common_config.get("ROOT_URL") or "http://localhost:3000"
+
+	site_path = frappe.get_site_path()
+
+	site_config = frappe.get_file_json(os.path.join(site_path, "site_config.json"))
+
+	root_url = site_config.get("ROOT_URL") or common_config.get("ROOT_URL") or "http://localhost:3000"
+
+	return root_url
 
 def get_meteor_server_url():
 	common_config = frappe.get_file_json("common_site_config.json")
-	return common_config.get("meteor_server") or "http://localhost:3000"
+
+	site_path = frappe.get_site_path()
+
+	site_config = frappe.get_file_json(os.path.join(site_path, "site_config.json"))
+
+	meteor_server = site_config.get("meteor_server") or common_config.get("meteor_server") or "http://localhost:3000"
+
+	return meteor_server
 
 def get_meteor_version(path):
 	content = frappe.get_file_items(path)
