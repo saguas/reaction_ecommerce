@@ -8,12 +8,12 @@ from frappe.commands import pass_context
 
 
 def set_admin_email(email):
-	user = frappe.db.get("User", {"name": "Administrator"})
+	user = frappe.get_doc("User", {"name": "Administrator"})
 	user.update({"email": email})
 	user.save()
 
 def get_admin_email():
-	user = frappe.db.get("User", {"name": "Administrator"})
+	user = frappe.get_doc("User", {"name": "Administrator"})
 	return user.email
 
 
