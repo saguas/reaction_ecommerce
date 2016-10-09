@@ -8,8 +8,8 @@ meteor_client = None
 islogin = False
 
 AdminUser = "luisfmfernandes@gmail.com"
-AdminPassword = "8950388"
-
+AdminPassword = 'af09cda8b7f29a0c8f0249768528330de6b036341204cf65d930ee58d740459f'
+#AdminPassword = "8950388"
 
 
 
@@ -76,10 +76,48 @@ def register_login_attempt(callback):
 
 
 def meteor_login(username, pwd, callback, token=None):
+	def login(client, user, password, token=None, callback=None):
+		"""Login with a username and password
+
+		Arguments:
+		user - username or email address
+		password - the password for the account
+
+		Keyword Arguments:
+		token - meteor resume token
+		callback - callback function containing error as first argument and login data"""
+		# TODO: keep the tokenExpires around so we know the next time
+		#       we need to authenticate
+
+		# password is already hashed
+		hashed = pwd
+		# handle username or email address
+		if '@' in user:
+			user_object = {
+				'email': user
+			}
+		else:
+			user_object = {
+				'username': user
+			}
+		password_object = {
+			'algorithm': 'sha-256',
+			'digest': hashed
+		}
+
+		client._login_token = token
+		client._login_data = {'user': user_object, 'password': password_object}
+
+		if token:
+			client._resume(token, callback=callback)
+		else:
+			client._login(client._login_data, callback=callback)
+
 	global islogin
 	if not islogin:
 		client = ddp_connect()
-		client.login(username, pwd, token, callback)
+		#client.login(username, pwd, token, callback)
+		login(client, username, pwd, token, callback)
 
 
 def ddp_connect():
