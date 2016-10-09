@@ -96,12 +96,11 @@ def install_web():
 
 
 def after_install():
-	install_web()
+	#install_web()
 	#install_desk()
 
 	from reaction_ecommerce.commands.site import update_password
 	site = frappe.local.site
-	print "change admin password for site: {}".format(site)
 	update_password([site], "")
 	info = """
 		**********************************************************
