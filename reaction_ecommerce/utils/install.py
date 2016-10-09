@@ -101,7 +101,7 @@ def after_install():
 
 	from reaction_ecommerce.commands.site import update_password
 	site = frappe.local.site
-	update_password([site], "")
+	#update_password([site], "")
 	info = """
 		**********************************************************
 		*   Every time you need to change admin password you     *
