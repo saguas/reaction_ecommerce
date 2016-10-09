@@ -11,7 +11,8 @@ def call_command(cmd, context):
 def get_commands():
 	# prevent circular imports
 	from .utils import commands as utils_commands
+	from .site import commands as site_commands
 
-	return list(set(utils_commands))
+	return list(set(utils_commands + site_commands))
 
 commands = get_commands()

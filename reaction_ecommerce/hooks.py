@@ -82,7 +82,8 @@ after_install = "reaction_ecommerce.utils.install.after_install"
 doc_events = {
 	"User": {
 #		"validate": "reaction_ecommerce.utils.users.validate",
- 		"on_trash": "reaction_ecommerce.utils.users.on_trash"
+ 		"on_trash":	"reaction_ecommerce.utils.users.on_trash",
+		"after_insert":	"reaction_ecommerce.utils.users.mongodb_insert_user"
 	}
 }
 

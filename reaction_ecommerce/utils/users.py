@@ -14,7 +14,7 @@ meteor_client = None
 def hashpw(pwd):
 	m = hashlib.sha256()
 	m.update(pwd)
-	hexpass = m.hexhdigest()
+	hexpass = m.hexdigest()
 
 	return hexpass
 
@@ -200,3 +200,40 @@ def on_logout():
 		ddp.logoutuser(email, None)
 	except Exception as e:
 		print "logout user {} error: {}".format(email, e)
+
+
+# see frappe.client.insert
+"""
+frappe.client.insert
+
+{"docstatus":0,"doctype":"User","name":"New User 1","__islocal":1,"__unsaved":1,"owner":"Administrator"
+,"enabled":1,"send_welcome_email":0,"language":"pt","gender":"","thread_notify":1,"background_style"
+:"Fill Screen","simultaneous_sessions":1,"user_type":"System User","__run_link_triggers":1,"email":"luisfmfernandes
+@icloud.com","first_name":"Luis","last_name":"icloud"}
+
+"""
+@frappe.whitelist()
+def insert_user(doc):
+	if isinstance(doc, basestring):
+		doc = json.loads(doc)
+
+	# this is necessary because we have a hook in User inserts. If is_from_efrappe=True don't insert user in mongodb in User insert hook.
+	frappe.local.flags.is_from_efrappe = True
+
+	doc = frappe.get_doc(doc).insert()
+
+	frappe.local.flags.is_from_efrappe = False
+
+	return doc.as_dict()
+
+
+#insert user on mongodb. We need update password yet.
+def mongodb_insert_user(doc, method):
+	#if flag is True user already inserted in mongodb.
+	if frappe.local.flags.is_from_efrappe:
+		return
+
+	#doc here is doc User class
+	print "mongodb_insert_user doc is: {} o is {}".format(doc.email, method)
+
+
