@@ -1,17 +1,49 @@
 import frappe
 import inspect
+import os
 
 
-METEOR_HOST = "localhost"
-METEOR_PORT = 3000
+
+METEOR_HOST = None
+METEOR_PORT = None
 meteor_client = None
 islogin = False
 
-AdminUser = "luisfmfernandes@gmail.com"
-AdminPassword = 'af09cda8b7f29a0c8f0249768528330de6b036341204cf65d930ee58d740459f'
-#AdminPassword = "8950388"
+AdminEmail = None
+AdminPassword = None
 
 
+
+def get_admin_data():
+
+	global AdminEmail
+	global AdminPassword
+	global METEOR_HOST
+	global METEOR_PORT
+
+	if AdminEmail and AdminPassword and METEOR_HOST and METEOR_PORT:
+		return
+
+	site_path = frappe.get_site_path()
+	site_config = frappe.get_file_json(os.path.join(site_path, "site_config.json"))
+	common_config = frappe.get_file_json("common_site_config.json")
+
+	ddp = common_config.get("DDP_DEFAULT_CONNECTION_URL")
+
+	AdminEmail = site_config.get("admin_email")
+	AdminPassword = site_config.get("admin_password")
+	ddp_url  = ddp.split("://")
+	if(len(ddp_url) > 1):
+		ddp_url = ddp_url[1].split(":")
+	else:
+		ddp_url = ddp_url[0].split(":")
+
+	METEOR_HOST = ddp_url[0] or "localhost"
+	METEOR_PORT = int(ddp_url[1].split("/")[0]) or 3000
+
+
+
+get_admin_data()
 
 def callback_default_function(func_name):
 	def callback_func(error, result):
@@ -43,7 +75,7 @@ def reaction_connect_ddp(fn):
 
 	return innerfn
 
-def reaction_login_ddp(admin=AdminUser, pwd=AdminPassword, callback=None):
+def reaction_login_ddp(admin=AdminEmail, pwd=AdminPassword, callback=None):
 	def reaction_ddp(fn):
 		"""
 		decorator function
@@ -90,7 +122,7 @@ def meteor_login(username, pwd, callback, token=None):
 		#       we need to authenticate
 
 		# password is already hashed
-		hashed = pwd
+		hashed = password
 		# handle username or email address
 		if '@' in user:
 			user_object = {

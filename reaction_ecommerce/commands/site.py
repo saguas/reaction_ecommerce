@@ -7,6 +7,11 @@ import frappe
 from frappe.commands import pass_context
 
 
+
+def get_admin_email():
+	user = frappe.db.get("User", {"name": "Administrator"})
+	return user.email
+
 def update_password(sites, user_password):
 	import getpass, os
 	from frappe.utils.password import update_password as upd_pwd
@@ -27,6 +32,7 @@ def update_password(sites, user_password):
 			site_path = frappe.get_site_path()
 			site_config = frappe.get_file_json(os.path.join(site_path, "site_config.json"))
 			site_config["admin_password"] = pwd_hash
+			site_config["admin_email"] = get_admin_email()
 			#write to file.
 			with open(os.path.join(site_path, "site_config.json"), 'w') as txtfile:
 				txtfile.write(frappe.as_json(site_config))
