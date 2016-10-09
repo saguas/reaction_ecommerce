@@ -12,7 +12,7 @@ def get_admin_email():
 	user = frappe.db.get("User", {"name": "Administrator"})
 	return user.email
 
-def update_password(sites, user_password):
+def update_password(sites, user_password, user_email):
 	import getpass, os
 	from frappe.utils.password import update_password as upd_pwd
 
@@ -23,6 +23,8 @@ def update_password(sites, user_password):
 			while not user_password:
 				user_password = getpass.getpass("Administrator's password for {0}: ".format(site))
 
+			while not user_email:
+				user_email = raw_input("Administrator's email for {0}: ".format(site))
 			# set password has meteor.js send to the server; as SHA256.
 			from reaction_ecommerce.utils.users import hashpw
 			frappe.connect()
@@ -32,7 +34,7 @@ def update_password(sites, user_password):
 			site_path = frappe.get_site_path()
 			site_config = frappe.get_file_json(os.path.join(site_path, "site_config.json"))
 			site_config["admin_password"] = pwd_hash
-			site_config["admin_email"] = get_admin_email()
+			site_config["admin_email"] = user_email
 			#write to file.
 			with open(os.path.join(site_path, "site_config.json"), 'w') as txtfile:
 				txtfile.write(frappe.as_json(site_config))
@@ -44,10 +46,11 @@ def update_password(sites, user_password):
 
 @click.command('set-admin-password')
 @click.option('--admin-password')
+@click.option('--admin-email')
 @pass_context
-def set_admin_password(context, admin_password):
+def set_admin_password(context, admin_password, admin_email):
 	"Set Administrator password for a site"
-	update_password(context.sites, user_password=admin_password)
+	update_password(context.sites, user_password=admin_password, user_email=admin_email)
 
 
 
