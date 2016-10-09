@@ -96,20 +96,24 @@ def install_web():
 
 
 def after_install():
-	#install_web()
+	install_web()
 	#install_desk()
 
-	from reaction_ecommerce.commands.site import update_password
-	site = frappe.local.site
+	#from reaction_ecommerce.commands.site import update_password
+	#site = frappe.local.site
 	#update_password([site], "")
+	
 	info = """
-		**********************************************************
-		*   Every time you need to change admin password you     *
-		*   must run bench reaction_ecommerce set-admin-password *
-		*   to set a new password for administrator.             *
-		*                                                        *
-		*   Please run bench reaction_ecommerce for more help.   *
-		**********************************************************
+		**************************************************************
+		*   Please run 												 *
+		*		bench reaction_ecommerce set-admin-password          *
+		*														 	 *
+		*   Every time you need to change admin password you     	 *
+		*   must run bench reaction_ecommerce set-admin-password 	 *
+		*   to set a new password for administrator.             	 *
+		*                                                        	 *
+		*   Please run bench reaction_ecommerce for more help.   	 *
+		**************************************************************
 	"""
 	print info
 
