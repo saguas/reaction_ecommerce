@@ -8,7 +8,7 @@ ROUNDS = 10
 REACTIONDB = "meteor"
 
 
-meteor_client = None
+reaction_web_client = None
 
 
 def hashpw(pwd):

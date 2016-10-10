@@ -6,8 +6,8 @@ import os
 
 REACTION_WEB_HOST = None
 REACTION_WEB_PORT = None
-meteor_client = None
-islogin = False
+reaction_web_client = None
+isWebLogin = False
 
 
 
@@ -103,8 +103,8 @@ def reaction_login_ddp(callback=None):
 
 def register_login_attempt(callback):
 	def func(error=None, result=None):
-		global islogin
-		islogin = True
+		global isWebLogin
+		isWebLogin = True
 		callback and callback(error, result)
 	return func
 
@@ -147,8 +147,8 @@ def meteor_login(username, pwd, callback, token=None):
 		else:
 			client._login(client._login_data, callback=callback)
 
-	global islogin
-	if not islogin:
+	global isWebLogin
+	if not isWebLogin:
 		client = ddp_connect()
 		#client.login(username, pwd, token, callback)
 		login(client, username, pwd, token, callback)
@@ -157,21 +157,21 @@ def meteor_login(username, pwd, callback, token=None):
 def ddp_connect():
 	from MeteorClient import MeteorClient
 
-	global meteor_client
-	if not meteor_client:
-		meteor_client = MeteorClient('ws://%s:%s/websocket' % (REACTION_WEB_HOST, REACTION_WEB_PORT))
-		meteor_client.connect()
-	return meteor_client
+	global reaction_web_client
+	if not reaction_web_client:
+		reaction_web_client = MeteorClient('ws://%s:%s/websocket' % (REACTION_WEB_HOST, REACTION_WEB_PORT))
+		reaction_web_client.connect()
+	return reaction_web_client
 
 
 @reaction_login_ddp()
 def create_meteor_user(email, pwd, username, callback):
-	meteor_client.call('createFrappeUser', [email, pwd, username], callback)
+	reaction_web_client.call('createFrappeUser', [email, pwd, username], callback)
 
 
 @reaction_login_ddp()
 def change_user_password(userId, newpwd, callback):
-	meteor_client.call('changeFrappePassword', [userId, newpwd], callback)
+	reaction_web_client.call('changeFrappePassword', [userId, newpwd], callback)
 
 
 
@@ -181,5 +181,5 @@ def logout_callback(error=None, result=None):
 
 @reaction_login_ddp(callback=logout_callback)
 def logoutuser(email, callback):
-	meteor_client.call('logoutFromFrappe', [email], callback)
+	reaction_web_client.call('logoutFromFrappe', [email], callback)
 
