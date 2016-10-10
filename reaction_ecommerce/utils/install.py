@@ -99,9 +99,9 @@ def after_install():
 	install_web()
 	#install_desk()
 
-	from reaction_ecommerce.commands.site import update_password
-	site = frappe.local.site
-	update_password([site], None, None)
+	#from reaction_ecommerce.commands.site import update_password
+	#site = frappe.local.site
+	#update_password([site], None, None)
 
 	info = """
 		**************************************************************
