@@ -31,8 +31,8 @@ def update_password(sites, user_password, user_email):
 			frappe.connect()
 			default_email = get_admin_email()
 
-			#while not user_email:
-			user_email = raw_input("Administrator's email for {0}, default email: ({1}) ".format(site, default_email))
+			if not user_email:
+				user_email = raw_input("Administrator's email for {0}, default email: ({1}) ".format(site, default_email))
 			# set password has meteor.js send to the server; as SHA256.
 			from reaction_ecommerce.utils.users import hashpw
 			pwd_hash = hashpw(user_password)
