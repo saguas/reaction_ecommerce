@@ -59,14 +59,14 @@ def get_meteor_ddp_default_conn_url():
 
 	return ddp
 
-def get_meteor_app_path():
+def get_meteor_webapp_path():
 	common_config = frappe.get_file_json("common_site_config.json")
 
 	site_path = frappe.get_site_path()
 
 	site_config = frappe.get_file_json(os.path.join(site_path, "site_config.json"))
 
-	meteor_app = site_config.get("meteor_app_path") or common_config.get("meteor_app_path") or ""
+	meteor_app = site_config.get("meteor_webapp_path") or common_config.get("meteor_webapp_path") or ""
 
 	return meteor_app
 
@@ -179,7 +179,7 @@ def calculateClientHash(manifest, str_meteor_config):
 
 
 def _get_meteor_runtime_config():
-	react_path = get_meteor_app_path()#"/Users/saguas/programacao/reaction_ecommerce_master_new/reaction"
+	react_path = get_meteor_webapp_path()#"/Users/saguas/programacao/reaction_ecommerce_master_new/reaction"
 	meteor_program_file_path = os.path.join(react_path, ".meteor/local/build/programs/web.browser/program.json")
 	manifest = get_meteor_manifest(meteor_program_file_path)
 
@@ -199,7 +199,7 @@ def get_meteor_runtime_config():
 	return meteor_runtime_config
 
 def get_react_files():
-	react_path = get_meteor_app_path()
+	react_path = get_meteor_webapp_path()
 	meteor_program_file_path = os.path.join(react_path, ".meteor/local/build/programs/web.browser/program.json")
 	manifest = get_meteor_manifest(meteor_program_file_path)
 

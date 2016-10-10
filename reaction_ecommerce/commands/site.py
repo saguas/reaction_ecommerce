@@ -26,8 +26,8 @@ def update_reaction_settings(admin_email, admin_password):
 			"FRAPPE_ADMIN_USERNAME": "Administrator",
 			"FRAPPE_URL": "http://localhost"
 	}
-	meteor_app_path = "../apps/reaction_ecommerce/reaction_ecommerce/www/webreaction"
-	with open(os.path.join(meteor_app_path, "settings", "dev.settings.json"), 'w') as txtfile:
+	meteor_webapp_path = "../apps/reaction_ecommerce/reaction_ecommerce/www/webreaction"
+	with open(os.path.join(meteor_webapp_path, "settings", "dev.settings.json"), 'w') as txtfile:
 		txtfile.write(frappe.as_json(reaction_setting_config))
 
 

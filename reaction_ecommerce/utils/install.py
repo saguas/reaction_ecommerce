@@ -106,7 +106,7 @@ def update_site_files():
 			"port": "3001"
 	}
 	common_config["ROOT_URL"] = "http://localhost:3000"
-	common_config["meteor_app_path"] = "../apps/reaction_ecommerce/reaction_ecommerce/www/webreaction"
+	common_config["meteor_webapp_path"] = "../apps/reaction_ecommerce/reaction_ecommerce/www/webreaction"
 	common_config["meteor_server"] = "http://localhost:3000"
 
 	with open("common_site_config.json", 'w') as txtfile:
