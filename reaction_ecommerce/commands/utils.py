@@ -64,7 +64,9 @@ def nginx():
 def before_start():
 	info = """
 		first:
-			run bench reaction_ecommerce set-admin-password
+			You need to correlate your frappe admin password with reaction admin password. So
+			please run:
+				bench reaction_ecommerce set-admin-password
 
 		second:
 			install reaction_cli command line app:
