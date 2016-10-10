@@ -14,6 +14,7 @@ islogin = False
 def get_admin_data():
 	site_path = frappe.get_site_path()
 	site_config = frappe.get_file_json(os.path.join(site_path, "site_config.json"))
+
 	AdminEmail = site_config.get("admin_email")
 	AdminPassword = site_config.get("admin_password")
 
@@ -76,7 +77,6 @@ def reaction_connect_ddp(fn):
 	return innerfn
 
 def reaction_login_ddp(callback=None):
-	admin, pwd = get_admin_data()
 	def reaction_ddp(fn):
 		"""
 		decorator function
@@ -85,6 +85,7 @@ def reaction_login_ddp(callback=None):
 		def innerfn(*args, **kwargs):
 			newargs = {}
 			try:
+				admin, pwd = get_admin_data()
 				meteor_login(admin, pwd, register_login_attempt(callback or callback_default_function("register_login_attempt")))
 				fnargs, varargs, varkw, defaults = inspect.getargspec(fn)
 				for a in fnargs:
