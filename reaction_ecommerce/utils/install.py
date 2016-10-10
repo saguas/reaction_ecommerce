@@ -121,6 +121,7 @@ def after_install():
 	#from reaction_ecommerce.commands.site import update_password
 	#site = frappe.local.site
 	#update_password([site], None, None)
+	update_site_files()
 
 	info = """
 		**************************************************************
