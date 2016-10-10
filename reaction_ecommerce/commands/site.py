@@ -3,8 +3,32 @@
 
 from __future__ import unicode_literals, absolute_import
 import click
-import frappe
+import frappe, os
 from frappe.commands import pass_context
+
+
+def update_reaction_settings(admin_email, admin_password):
+	reaction_setting_config = frappe._dict()
+	# reaction_setting_config = frappe.get_file_json(os.path.join(common_config.get("meteor_app_path"), "settings", "dev.settings.json"))
+	reaction_setting_config["ROOT_URL"] = ""
+	reaction_setting_config["MONGO_URL"] = ""
+	reaction_setting_config["FRAPPE_URL"] = "http://localhost"
+	reaction_setting_config["DDP_DEFAULT_CONNECTION_URL"] = "http://localhost:3000/"
+	reaction_setting_config["MAIL_URL"] = ""
+	reaction_setting_config["reaction"] = {
+		"REACTION_USER": "admin",
+		"REACTION_AUTH": admin_password,
+		"REACTION_EMAIL": admin_email,
+	}
+	reaction_setting_config["isDebug"] = "info"
+	reaction_setting_config["public"] = {}
+	reaction_setting_config["frappe"] = {
+			"FRAPPE_ADMIN_USERNAME": "Administrator",
+			"FRAPPE_URL": "http://localhost"
+	}
+	meteor_app_path = "../apps/reaction_ecommerce/reaction_ecommerce/www/webreaction"
+	with open(os.path.join(meteor_app_path, "settings", "dev.settings.json"), 'w') as txtfile:
+		txtfile.write(frappe.as_json(reaction_setting_config))
 
 
 def set_admin_email(email):
@@ -18,7 +42,7 @@ def get_admin_email():
 
 
 def update_password(sites, user_password, user_email):
-	import getpass, os
+	import getpass
 	from frappe.utils.password import update_password as upd_pwd
 
 	for site in sites:
@@ -48,6 +72,8 @@ def update_password(sites, user_password, user_email):
 			#write to file.
 			with open(os.path.join(site_path, "site_config.json"), 'w') as txtfile:
 				txtfile.write(frappe.as_json(site_config))
+
+			update_reaction_settings(user_email or default_email, user_password)
 			user_password = None
 		finally:
 			frappe.destroy()

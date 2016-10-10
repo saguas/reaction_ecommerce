@@ -95,6 +95,25 @@ def install_web():
 	os.symlink(src, dst)
 
 
+def update_site_files():
+	common_config = frappe.get_file_json("common_site_config.json")
+	site_path = frappe.get_site_path()
+	#site_config = frappe.get_file_json(os.path.join(site_path, "site_config.json"))
+	common_config["DDP_DEFAULT_CONNECTION_URL"] = "http://localhost:3000/"
+	common_config["ROOT_URL_PATH_PREFIX"] = ""
+	common_config["MONGOWEB"] = {
+			"host": "localhost",
+			"port": "3001"
+	}
+	common_config["ROOT_URL"] = "http://localhost:3000"
+	common_config["meteor_app_path"] = "../apps/reaction_ecommerce/reaction_ecommerce/www/webreaction"
+	common_config["meteor_server"] = "http://localhost:3000"
+	with open("common_site_config.json", 'w') as txtfile:
+		txtfile.write(frappe.as_json(common_config))
+
+
+
+
 def after_install():
 	install_web()
 	#install_desk()
