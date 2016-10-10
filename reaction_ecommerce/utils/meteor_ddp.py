@@ -4,46 +4,46 @@ import os
 
 
 
-METEOR_HOST = None
-METEOR_PORT = None
+REACTION_WEB_HOST = None
+REACTION_WEB_PORT = None
 meteor_client = None
 islogin = False
-
-AdminEmail = None
-AdminPassword = None
 
 
 
 def get_admin_data():
-
-	global AdminEmail
-	global AdminPassword
-	global METEOR_HOST
-	global METEOR_PORT
-
-	if AdminEmail and AdminPassword and METEOR_HOST and METEOR_PORT:
-		return
-
 	site_path = frappe.get_site_path()
 	site_config = frappe.get_file_json(os.path.join(site_path, "site_config.json"))
+	AdminEmail = site_config.get("admin_email")
+	AdminPassword = site_config.get("admin_password")
+
+	return (AdminEmail, AdminPassword)
+
+
+
+def get_mongo_data():
+
+	global REACTION_WEB_HOST
+	global REACTION_WEB_PORT
+
+	if REACTION_WEB_HOST and REACTION_WEB_PORT:
+		return
+
 	common_config = frappe.get_file_json("common_site_config.json")
 
 	ddp = common_config.get("DDP_DEFAULT_CONNECTION_URL")
-
-	AdminEmail = site_config.get("admin_email")
-	AdminPassword = site_config.get("admin_password")
 	ddp_url  = ddp.split("://")
 	if(len(ddp_url) > 1):
 		ddp_url = ddp_url[1].split(":")
 	else:
 		ddp_url = ddp_url[0].split(":")
 
-	METEOR_HOST = ddp_url[0] or "localhost"
-	METEOR_PORT = int(ddp_url[1].split("/")[0]) or 3000
+	REACTION_WEB_HOST = ddp_url[0] or "localhost"
+	REACTION_WEB_PORT = int(ddp_url[1].split("/")[0]) or 3000
 
 
 
-get_admin_data()
+get_mongo_data()
 
 def callback_default_function(func_name):
 	def callback_func(error, result):
@@ -75,7 +75,8 @@ def reaction_connect_ddp(fn):
 
 	return innerfn
 
-def reaction_login_ddp(admin=AdminEmail, pwd=AdminPassword, callback=None):
+def reaction_login_ddp(callback=None):
+	admin, pwd = get_admin_data()
 	def reaction_ddp(fn):
 		"""
 		decorator function
@@ -157,7 +158,7 @@ def ddp_connect():
 
 	global meteor_client
 	if not meteor_client:
-		meteor_client = MeteorClient('ws://%s:%s/websocket' % (METEOR_HOST, METEOR_PORT))
+		meteor_client = MeteorClient('ws://%s:%s/websocket' % (REACTION_WEB_HOST, REACTION_WEB_PORT))
 		meteor_client.connect()
 	return meteor_client
 

@@ -9,7 +9,7 @@ import click
 @click.command('nginx')
 def nginx():
 	info = """
-		Add the followint at the top of nginx.conf file after upstream frappe-bench-frappe and upstream frappe-bench-socketio-server
+		Add the following at the top of nginx.conf file after upstream frappe-bench-frappe and upstream frappe-bench-socketio-server
 
 		upstream meteor-reaction {
 			server 127.0.0.1:3000 fail_timeout=0;
@@ -64,17 +64,19 @@ def nginx():
 def before_start():
 	info = """
 		first:
+			run bench reaction_ecommerce set-admin-password
+
+		second:
 			install reaction_cli command line app:
 
 				npm install -g reaction-cli
 
-		second:
+		third:
 			run bench reaction_ecommerce nginx to see how to config nginx for reaction ecommerce app
 
-
-		third:
+		fourth:
 			Go to reaction_ecommerce/www/webreaction/settings folder and fill in some fields of dev.settings.json file:
-			This example is for gmail and localhost
+			This example is for gmail and localhost, some were update be first step.
 
 			{
 			  "FRAPPE_URL": "http://localhost",
@@ -104,8 +106,11 @@ def before_start():
 		Note:
 			If you already started reaction ecommerce before to do this changes in settings you must stop it and run it again with the following command:
 				reaction reset (note: answer no to the question to reinstall npm packages)
-		fourth:
-			 In sites/common_site_config.json set:
+
+		fifth:
+			 In sites/common_site_config.json check if every thing is correct and accordling your case:
+
+			Some fields was setting after installing this aplication:
 
 			 "meteor_server": "http://localhost:3000",
 			 "meteor_app_path": "../apps/reaction_ecommerce/reaction_ecommerce/www/webreaction",
@@ -117,7 +122,7 @@ def before_start():
 			   "port": "3001"
 			 }
 
-		fifth:
+		sixth:
 			In one terminal cd frappe_bench folder and do bench start
 			In another terminal from frappe_bench folder do cd apps/reaction_ecommerce/reaction_ecommerce/www/webreaction and issue reaction
 			In your browser go to http://localhost or the url where is your nginx listening.
