@@ -112,8 +112,8 @@ def before_start():
 
 			Some fields was setting after installing this aplication:
 
-			 "meteor_server": "http://localhost:3000",
-			 "meteor_app_path": "../apps/reaction_ecommerce/reaction_ecommerce/www/webreaction",
+			 "reaction_server": "http://localhost:3000",
+			 "reaction_webapp_path": "../apps/reaction_ecommerce/reaction_ecommerce/www/webreaction",
 			 "ROOT_URL":"http://localhost:3000",
 			 "ROOT_URL_PATH_PREFIX":"",
 			 "DDP_DEFAULT_CONNECTION_URL":"http://localhost:3000/",
