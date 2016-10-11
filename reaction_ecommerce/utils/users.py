@@ -194,12 +194,13 @@ def on_logout():
 			print "result for logoutuser {}".format(result)
 
 	#frappe Admin must have the same address of reaction admin
-	db.users.update_one({"emails.address": {"$in": [email]}}, {"$set":{"profile.cookies": cookies}})
-	import meteor_ddp as ddp
-	try:
-		ddp.logoutuser(email, None)
-	except Exception as e:
-		print "logout user {} error: {}".format(email, e)
+	#db.users.update_one({"emails.address": {"$in": [email]}}, {"$set":{"profile.cookies": cookies}})
+	db.users.update_one({"emails.address": {"$in": [email]}}, {"$set": {"profile.frappe_login": False}})
+	#import meteor_ddp as ddp
+	#try:
+	#	ddp.logoutuser(email, None)
+	#except Exception as e:
+	#	print "logout user {} error: {}".format(email, e)
 
 
 # see frappe.client.insert
