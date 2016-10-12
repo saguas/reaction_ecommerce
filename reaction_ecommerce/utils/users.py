@@ -154,6 +154,7 @@ def test_password_strength(new_password, key=None, old_password=None):
 
 
 def on_logout():
+	print "on_logout {}".format(frappe.local.form_dict)
 	if frappe.session.user == "Guest":
 		print "user Guest, do nothing!!"
 		return
