@@ -1,3 +1,5 @@
+"""
+
 import frappe
 import inspect
 import os
@@ -57,9 +59,7 @@ def callback_default_function(func_name):
 
 
 def reaction_connect_ddp(fn):
-	"""
-	decorator function
-	"""
+
 	def innerfn(*args, **kwargs):
 		newargs = {}
 		try:
@@ -78,9 +78,6 @@ def reaction_connect_ddp(fn):
 
 def reaction_login_ddp(callback=None):
 	def reaction_ddp(fn):
-		"""
-		decorator function
-		"""
 
 		def innerfn(*args, **kwargs):
 			newargs = {}
@@ -111,16 +108,7 @@ def register_login_attempt(callback):
 
 def meteor_login2(username, pwd, callback, token=None):
 	def login(client, user, password, token=None, callback=None):
-		"""Login with a username and password
 
-		Arguments:
-		user - username or email address
-		password - the password for the account
-
-		Keyword Arguments:
-		token - meteor resume token
-		callback - callback function containing error as first argument and login data"""
-		# TODO: keep the tokenExpires around so we know the next time
 		#       we need to authenticate
 
 		# password is already hashed
@@ -157,15 +145,6 @@ def meteor_login2(username, pwd, callback, token=None):
 
 def meteor_login(username="", pwd="", callback=None, token=None):
 	def login(client, user, password, token=None, callback=None):
-		"""Login with a username and password
-
-		Arguments:
-		user - username or email address
-		password - the password for the account
-
-		Keyword Arguments:
-		token - meteor resume token
-		callback - callback function containing error as first argument and login data"""
 		# TODO: keep the tokenExpires around so we know the next time
 		#       we need to authenticate
 
@@ -257,3 +236,4 @@ def logoutuser(email, callback):
 	if reaction_token:
 		#meteor_login("", "", register_login_attempt(callback or callback_default_function("register_login_attempt")), reaction_token)
 		meteor_login(email, "", resume, reaction_token)
+"""

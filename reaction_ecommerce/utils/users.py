@@ -171,9 +171,10 @@ def on_logout():
 	email = frappe.session.user
 	if email == "Administrator":
 		user = frappe.get_doc("User", email)
-		if user:
-			email = user.email
+		email = user.email
 
+	db.users.update_one({"emails.address": {"$in": [email]}}, {"$set": {"profile.frappe_login": False}})
+	"""
 	from frappe.auth import CookieManager
 	from werkzeug.wrappers import Response
 	response = Response()
@@ -193,10 +194,9 @@ def on_logout():
 			print "error for logoutuser {}".format(error)
 		else:
 			print "result for logoutuser {}".format(result)
-
+	"""
 	#frappe Admin must have the same address of reaction admin
 	#db.users.update_one({"emails.address": {"$in": [email]}}, {"$set":{"profile.cookies": cookies}})
-	db.users.update_one({"emails.address": {"$in": [email]}}, {"$set": {"profile.frappe_login": False}})
 	#import meteor_ddp as ddp
 	#try:
 	#	ddp.logoutuser(email, None)
